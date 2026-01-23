@@ -27,7 +27,8 @@ raw_write(
                 << "Count : "
                 << (int) raw->get_count()
                 << " | Actual Size : "
-                << raw->get_buffer().size();
+                << raw->get_buffer().size()
+                << std::endl;
         return OilError::InvalidOilData;
     }
     if (revert) raw->revert();
@@ -53,8 +54,9 @@ huff_write(
             << "Huff flush called : "
             << (int) huff->get_count()
             << " | Char : "
-            << huff->get_buffer()[0];
-    if (raw->get_count() > 1) {
+            << huff->get_buffer()[0]
+            << std::endl;
+    if (raw->get_count() > 3) {
         if (
             const auto result
                 = raw_write(
@@ -65,7 +67,7 @@ huff_write(
                 );
             result.has_value()
         ) return result.value();
-    }
+    } else raw->clear();
     fwrite(
         huff->data().data(),
         HUFF_SIZE,
