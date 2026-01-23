@@ -42,7 +42,8 @@ oil_read(FILE* in, bool debug) {
     if (debug)
         std::cout
             << "Huff Raw byte : "
-            << (int) file_read;
+            << (int) file_read
+            << std::endl;
     if (file_read == EOF)
         return std::unexpected(
             OilError::EOFReached
@@ -76,7 +77,8 @@ oil_read(FILE* in, bool debug) {
         if (debug)
             std::cout
                 << "Huff Character : "
-                << (char) file_read;
+                << (char) file_read
+                << std::endl;
         for (uint8_t _{0u}; _ < amount; _++) {
             out += (char) file_read;
         }
@@ -91,6 +93,6 @@ oil_read(FILE* in, bool debug) {
         if (debug) std::cout << show_char(file_read);
         out += (char) file_read;
     }
-    std::cout << std::endl;
+    if (debug) std::cout << std::endl;
     return out;
 }
