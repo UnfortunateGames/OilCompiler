@@ -28,9 +28,9 @@ validate_header_then_move(FILE* in, bool debug) {
         (file_read = fgetc(in)) == EOF
     ) return std::nullopt;
     fseek(in, file_read, SEEK_SET);
-    if (file_read < header[VERSION_INDEX])
+    if (version < header[VERSION_INDEX])
         return Version::Old;
-    if (file_read > header[VERSION_INDEX])
+    if (version > header[VERSION_INDEX])
         return Version::Future;
     return Version::Valid;
 }

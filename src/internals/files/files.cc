@@ -39,6 +39,7 @@ oil_comp(FILE* in, FILE* out, bool debug) {
                     << std::endl;
             huff_buffer.reset(current);
             raw_buffer.push(previous = current);
+            continue;
         } if (previous == current) {
             if (debug)
                 std::cout
@@ -64,6 +65,37 @@ oil_comp(FILE* in, FILE* out, bool debug) {
             debug
         );
         previous = current;
+    }
+    if (debug)
+        std::cout
+            << "Exitted loop"
+            << std::endl;
+    if (
+        huff_buffer.get_count() >= HUFF_SIZE
+    ) {
+        if (debug) std::cout << "Final huff flush" << std::endl;
+        if (
+            const auto result
+                = huff_write(
+                    out,
+                    &huff_buffer,
+                    &raw_buffer,
+                    debug
+                );
+            result.has_value()
+        ) return result.value();
+    } else if (raw_buffer.get_count() > 0) {
+        if (debug) std::cout << "Final Raw Flush" << std::endl;
+        if (
+            const auto result
+                = raw_write(
+                    out,
+                    &raw_buffer,
+                    false,
+                    debug
+                );
+            result.has_value()
+        ) return result.value();
     }
     return std::nullopt;
 }

@@ -117,20 +117,20 @@ class OilData {
             return this->buffer;
         }
         // Writing to file
-        uint8_t* data() {
-            std::vector<uint8_t> out{};
+        std::vector<uint8_t> data() {
+            std::vector<uint8_t> out;
             if (this->huff_raw) {
-                out.push_back(1);
+                out.push_back(1u);
                 out.push_back(this->count);
-                out.push_back(this->buffer[0]);
-                return out.data();
+                out.push_back((uint8_t) this->buffer[0]);
+                return out;
             }
-            out.push_back(0);
+            out.push_back(0u);
             out.push_back(this->count);
             for (const char iter : this->buffer) {
                 out.push_back((uint8_t) iter);
             }
-            return out.data();
+            return out;
         }
     private:
         const bool huff_raw;

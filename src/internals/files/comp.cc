@@ -32,7 +32,7 @@ raw_write(
     }
     if (revert) raw->revert();
     fwrite(
-        raw->data(),
+        raw->data().data(),
         RAW_BASE + raw->get_count(),
         1, out
     );
@@ -67,7 +67,7 @@ huff_write(
         ) return result.value();
     }
     fwrite(
-        huff->data(),
+        huff->data().data(),
         HUFF_SIZE,
         1, out
     );
@@ -82,7 +82,7 @@ huff_run_checks(
     bool debug
 ) {
     if (
-        huff->get_count() > HUFF_SIZE
+        huff->get_count() >= HUFF_SIZE
         && raw->get_count() > 3
     ) if (
         const auto result
