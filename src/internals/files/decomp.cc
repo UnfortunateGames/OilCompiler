@@ -37,7 +37,7 @@ validate_header_then_move(FILE* in, bool debug) {
 
 std::expected<std::string, OilError>
 oil_read(FILE* in, bool debug) {
-    if (debug) std::cout << "Reading byte";
+    if (debug) std::cout << "Reading byte" << std::endl;
     int16_t file_read = fgetc(in);
     if (debug)
         std::cout
@@ -89,7 +89,7 @@ oil_read(FILE* in, bool debug) {
                 OilError::EOFReached
             );
         if (debug) std::cout << show_char(file_read);
-        out += show_char(file_read);
+        out += (char) file_read;
     }
     std::cout << std::endl;
     return out;
